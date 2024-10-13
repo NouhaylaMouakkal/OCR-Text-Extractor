@@ -1,1 +1,44 @@
-<p>home works!</p>
+<div class="max-w-screen-md mx-auto mt-16 p-6 bg-white rounded-lg shadow-md mb-16">
+    <div 
+        class="border-2 border-dashed border-gray-300 rounded-lg p-6 mb-4 text-center cursor-pointer transition duration-200 hover:bg-gray-100"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)"
+        (click)="fileInput.click()"
+    >
+        <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+        <p class="mt-2 text-sm text-gray-600">Drag file(s) here or click to browse</p>
+    </div>
+
+    <!-- Display error message if exists -->
+    <div *ngIf="errorMessage" class="text-red-500 mb-4">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="uploadedImage" class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            Uploaded Image:
+        </label>
+        <img [src]="uploadedImage" alt="Uploaded Image" class="w-full h-auto border border-gray-300 rounded-md shadow-sm" />
+    </div>
+
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            Extracted text:
+        </label>
+        <textarea
+            class="w-full h-24 p-2 border border-gray-300 rounded-md resize-none focus:ring focus:ring-blue-500"
+            [(ngModel)]="extractedText"
+            readonly
+        ></textarea>
+    </div>
+
+    <button 
+        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+        (click)="copyText()"
+    >
+        Copy text
+    </button>
+</div>
